@@ -22,6 +22,8 @@ layer-wise results across several models.
 - hate-tuned DeBERTa
 
 ## Repository structure
+
+```text
 .
 ├── notebooks/
 │   └── checkpoint1/
@@ -36,6 +38,7 @@ layer-wise results across several models.
     └── checkpoint1/
         ├── *_scores.csv
         └── depth_comparison/
+```
 
 ## Notebooks
 
