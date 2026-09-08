@@ -1,0 +1,26 @@
+model,depth_category,Both correct,Latent only correct,Behavioral only correct,Both wrong
+DeBERTa hate-tuned,Very early,461,240,369,175
+DeBERTa hate-tuned,Early,459,219,371,196
+DeBERTa hate-tuned,Middle,394,200,270,132
+DeBERTa hate-tuned,Late,559,236,271,179
+DeBERTa hate-tuned,Very late,789,345,41,70
+Gemma 2 2B,Very early,573,370,225,326
+Gemma 2 2B,Early,524,309,141,271
+Gemma 2 2B,Middle,519,322,146,258
+Gemma 2 2B,Late,569,524,96,56
+Gemma 2 2B,Very late,556,518,109,62
+Gemma 2 2B IT,Very early,602,325,280,287
+Gemma 2 2B IT,Early,530,306,205,204
+Gemma 2 2B IT,Middle,663,459,72,51
+Gemma 2 2B IT,Late,703,500,32,10
+Gemma 2 2B IT,Very late,702,496,33,14
+Gemma 2 9B,Very early,582,832,453,374
+Gemma 2 9B,Early,507,848,413,224
+Gemma 2 9B,Middle,532,871,388,201
+Gemma 2 9B,Late,893,968,27,104
+Gemma 2 9B,Very late,908,1081,127,125
+Gemma 2 9B IT,Very early,1248,154,732,107
+Gemma 2 9B IT,Early,1165,192,595,40
+Gemma 2 9B IT,Middle,1585,210,175,22
+Gemma 2 9B IT,Late,1712,216,48,16
+Gemma 2 9B IT,Very late,1917,243,63,18
