@@ -1,0 +1,66 @@
+{
+  "models": [
+    {
+      "model": "gemma-2-2b",
+      "dataset_size": 1244,
+      "layers": 27,
+      "score_rows": 33588,
+      "test_size": 249,
+      "behavioral_accuracy": 0.5341365461847389,
+      "latent_accuracy_last_layer": 0.8634538152610441,
+      "max_cpu_gpu_latent_difference": 2.733520507725018e-07,
+      "probe_reuse_verified": true
+    },
+    {
+      "model": "gemma-2-2b-it",
+      "dataset_size": 1244,
+      "layers": 27,
+      "score_rows": 33588,
+      "test_size": 249,
+      "behavioral_accuracy": 0.5381526104417671,
+      "latent_accuracy_last_layer": 0.9598393574297188,
+      "max_cpu_gpu_latent_difference": 2.9842559812198743e-07,
+      "probe_reuse_verified": true,
+      "chat_behavioral_accuracy": 0.5903614457831325
+    },
+    {
+      "model": "gemma-2-9b",
+      "dataset_size": 1244,
+      "layers": 43,
+      "score_rows": 53492,
+      "test_size": 249,
+      "behavioral_accuracy": 0.46184738955823296,
+      "latent_accuracy_last_layer": 0.8795180722891566,
+      "max_cpu_gpu_latent_difference": 3.1022644042533187e-07,
+      "probe_reuse_verified": true
+    },
+    {
+      "model": "gemma-2-9b-it",
+      "dataset_size": 1244,
+      "layers": 43,
+      "score_rows": 53492,
+      "test_size": 249,
+      "behavioral_accuracy": 0.8714859437751004,
+      "latent_accuracy_last_layer": 0.963855421686747,
+      "max_cpu_gpu_latent_difference": 3.4456634523394314e-07,
+      "probe_reuse_verified": true,
+      "chat_behavioral_accuracy": 0.8835341365461847
+    },
+    {
+      "model": "deberta-hate-tuned",
+      "dataset_size": 1244,
+      "layers": 25,
+      "score_rows": 31100,
+      "test_size": 249,
+      "behavioral_accuracy": 0.6666666666666666,
+      "latent_accuracy_last_layer": 0.8795180722891566,
+      "max_cpu_gpu_latent_difference": 8.322268676974609e-07,
+      "probe_reuse_verified": true
+    }
+  ],
+  "protected_files_unchanged": null,
+  "total_score_rows": 205260,
+  "all_layers": 165,
+  "validation": "passed",
+  "protected_tracked_content_unchanged": true
+}

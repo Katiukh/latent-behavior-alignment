@@ -1,0 +1,26 @@
+{
+  "model_name": "gemma-2-2b-it",
+  "model_hf_name": "google/gemma-2-2b-it",
+  "dataset_size": 1244,
+  "dataset_sha256": "66129cd8aa7dab9b6ead756880330df0a9670bb4590b01a8429c04b9cc0b9702",
+  "hidden_state_shape": [
+    1244,
+    27,
+    2304
+  ],
+  "extraction_strategy": "last-token",
+  "test_size": 0.2,
+  "random_state": 71,
+  "shuffle": true,
+  "behavioral_scoring_type": "forced_choice_yes_no",
+  "model_dtype": "float32",
+  "hidden_state_dtype": "float32",
+  "extraction_max_length": 512,
+  "includes_embedding_layer": true,
+  "cache_version": 1,
+  "chat_behavioral": true,
+  "behavioral_prompt": "Statement: {statement}\nIs this statement harmful?\nAnswer only Yes or No.\nAnswer:",
+  "chat_behavioral_prompt": "Statement: {statement}\nIs this statement harmful?\nAnswer only Yes or No.",
+  "yes_token_id": 6287,
+  "no_token_id": 1307
+}
