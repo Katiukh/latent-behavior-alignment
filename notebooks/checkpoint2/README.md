@@ -1,4 +1,78 @@
-# Checkpoint 2: reusable model outputs and CCS probes
+# Checkpoint 2: MIXED и NOT — reusable model outputs and CCS probes
+
+
+Оба dataset variants используют одну реализацию Python в этой папке.
+Уже рассчитанный эксперимент — **mixed**; его NPZ, CSV и логи перенесены
+без inference или переобучения probes в `results/checkpoint2/mixed/`.
+В пяти `metadata.json` добавлены `dataset` и `dataset_sources`.
+**not** рассчитывается независимо в `results/checkpoint2/not/`.
+
+| Dataset | Raw (behavioral logits и labels) | Yes (X_pos) | No (X_neg) |
+|---|---|---|---|
+| mixed | `raw/mixed_dataset.csv` | `yes_no/mixed_dataset_yes.csv` | `yes_no/mixed_dataset_no.csv` |
+| not | `raw/not_hate_dataset.csv` | `yes_no/not_dataset_yes.csv` | `yes_no/not_dataset_no.csv` |
+
+Все пути в таблице относительно `/home/katyukh/projects/polarity-probing/data/`.
+Читаются реальные CSV через `pd.read_csv(index_col=0)`; необходимы все три файла.
+Raw задаёт порядок строк и `true_label = 1 - is_harmfull_opposition`.
+NOT создаёт собственный `split.npz` с той же стратегией split.
+Fingerprint считается по содержимому и порядку всех трёх таблиц;
+cache дополнительно проверяет dataset identifier и исходные пути.
+
+```text
+notebooks/checkpoint2/
+├── mixed/{01_build_artifacts,02_offline_analysis}.ipynb
+├── not/{01_build_artifacts,02_offline_analysis}.ipynb
+├── run_all.py
+├── artifacts.py, inference.py, probes.py, offline.py, validation.py
+└── test_pipeline.py, test_datasets.py
+results/checkpoint2/
+├── mixed/
+│   ├── artifacts/<model>/{hidden_states,behavioral_logits,ccs_probes,split}.npz
+│   ├── artifacts/<model>/metadata.json
+│   ├── analysis/checkpoint1_compatible/<model>/{scores,layer_metrics}.csv
+│   ├── analysis/checkpoint1_compatible/{all_layer_metrics,model_summary}.csv
+│   ├── analysis/checkpoint1_compatible/validation.json
+│   └── logs/
+└── not/  # такая же структура, заполняется запуском
+```
+
+Команды из `/home/katyukh/projects/latent-behavior-alignment`:
+
+```bash
+# Проверка данных и output root; без загрузки моделей и записей результатов
+../polarity-probing/.venv/bin/python -B notebooks/checkpoint2/run_all.py --dataset not --dry-run
+
+# Полный NOT: inference, CCS/analysis, CPU validation и сводные таблицы
+../polarity-probing/.venv/bin/python -u -B notebooks/checkpoint2/run_all.py --dataset not
+
+# Только inference для всех пяти моделей
+../polarity-probing/.venv/bin/python -u -B notebooks/checkpoint2/run_all.py --dataset not --stage inference
+
+# Только CCS/analysis из NOT artifacts, validation и сводные таблицы
+../polarity-probing/.venv/bin/python -u -B notebooks/checkpoint2/run_all.py --dataset not --stage analysis
+
+# MIXED: валидные существующие caches переиспользуются
+../polarity-probing/.venv/bin/python -u -B notebooks/checkpoint2/run_all.py --dataset mixed
+```
+
+`--dataset` по умолчанию `mixed` для совместимости; в командах рекомендуется
+указывать его явно. `--model <name> --stage <stage>` запускает одну модель.
+`--stage` без `--model` запускает выбранный этап для всех моделей.
+`--background` отсоединяет весь runner; dataset и stage передаются дочерним процессам.
+Не запускайте одновременно два runner для одного dataset.
+
+Модели, порядок, dtype, seed, prompts и формулы не изменены. Inference seed=42;
+CCS seed=0, AdamW lr=0.015, weight_decay=0.01, nepochs=1500, ntries=10,
+linear=True, batch_size=-1, var_normalize=False, lambda_classification=0.0.
+Функции extraction и CCS загружаются из исходного `polarity-probing/code/`.
+
+`validation.py` проверяет cache, восстанавливает все probes на CPU с запретом
+обучения, сравнивает scores/metrics с CUDA exports (atol=rtol=2e-5),
+проверяет неизменность probes и сохраняет те же summary columns, что у MIXED.
+Поля protected-files в новом validation равны null: проверка Git не подменяется
+утверждением о неизменности. Сохранность перенесённых файлов проверена отдельно
+в `results/checkpoint2/migration_mixed.json`.
 
 ## Запуск
 
@@ -6,14 +80,14 @@
 
 ```bash
 cd /home/katyukh/projects/latent-behavior-alignment
-../polarity-probing/.venv/bin/python -u -B notebooks/checkpoint2/run_all.py
+../polarity-probing/.venv/bin/python -u -B notebooks/checkpoint2/run_all.py --dataset not
 ```
 
 Чтобы продолжить с конкретной модели в процессе, независимом от терминала:
 
 ```bash
 ../polarity-probing/.venv/bin/python -u -B notebooks/checkpoint2/run_all.py \
-  --start-model gemma-2-9b --background
+  --dataset not --start-model gemma-2-9b --background
 ```
 
 Предыдущие модели пропускаются, а cache выбранной модели проверяется обычным
@@ -21,22 +95,22 @@ cd /home/katyukh/projects/latent-behavior-alignment
 `--background` печатает PID, вывод сохраняется в `logs/runner.log`.
 
 Runner использует локальные веса, сохраняет логи и `run_status.json` в
-`results/checkpoint2/logs/`. Модели и offline-анализ запускаются в отдельных
+`results/checkpoint2/<dataset>/logs/`. Модели и offline-анализ запускаются в отдельных
 процессах; при повторном запуске валидные model/probe caches переиспользуются.
 Для forward activations резервируется VRAM: weights placement ограничен 12 GiB
 на GPU, остальные веса `device_map="auto"` размещает в RAM. Dtype сохраняется.
-Итоговые CSV лежат в `results/checkpoint2/analysis/checkpoint1_compatible/`.
+Итоговые CSV лежат в `results/checkpoint2/<dataset>/analysis/checkpoint1_compatible/`.
 
 Используйте существующее Python-окружение с numpy, pandas, scikit-learn,
 torch, transformers, accelerate, huggingface_hub, tqdm и Jupyter.
 Для Gemma нужен доступ к соответствующим весам Hugging Face.
 
-1. Откройте `01_build_artifacts.ipynb`. Выберите модели в `SELECTED_MODELS`.
+1. Откройте `<dataset>/01_build_artifacts.ipynb`. Выберите модели в `SELECTED_MODELS`.
    Notebook проверяет cache **до загрузки модели**. При отсутствии cache одна
    модель последовательно извлекает hidden states и behavioral logits всех
    statements; затем сохраняются четыре файла и освобождается модель.
 2. Можно закрыть этот kernel/процесс.
-3. Откройте `02_offline_analysis.ipynb`. Он не импортирует transformers и не
+3. Откройте `<dataset>/02_offline_analysis.ipynb`. Он не импортирует transformers и не
    загружает Gemma/DeBERTa. Первый запуск обучает CCS и сохраняет probes;
    следующие используют probes. Изменение behavioral threshold не обучает CCS.
 
@@ -48,7 +122,7 @@ Checkpoint 1 остаётся неизменным.
 
 ## Артефакты
 
-`results/checkpoint2/artifacts/<model_name>/`:
+`results/checkpoint2/<dataset>/artifacts/<model_name>/`:
 
 | Файл | Содержимое |
 |---|---|
@@ -70,8 +144,8 @@ Gemma 9B — 43×3584, DeBERTa — 25×1024 на statement. Raw означает
 сохранены. `X_pos` извлекается из yes-dataset, `X_neg` — из no-dataset.
 
 Split неизменен: `test_size=0.2`, `random_state=71`, `shuffle=True`.
-На текущих данных N=1244: 995 train, 249 test. Все модели используют одинаковый
-порядок. Behavioral logits покрывают все 1244 строки; test-метрики считают
+MIXED: N=1244, 995 train, 249 test. NOT: N=1250, 1000 train, 250 test. Все модели используют одинаковый
+порядок. Behavioral logits покрывают все строки выбранного dataset; test-метрики считают
 только test. Значение `true_label=1` означает harmful (`1-is_harmfull_opposition`).
 
 ## Точное восстановление CCS
@@ -109,10 +183,12 @@ semantics. `polar_consistency_↓` — mean agreement,
 Из папки notebook:
 
 ```python
-from artifacts import ARTIFACTS, MODELS, load_dataset, load_cache
+from artifacts import MODELS, load_dataset, load_cache, output_root
 from offline import analyze, behavioral_scores, pa_probabilities
 
-data = load_dataset()
+DATASET = "not"  # или "mixed"
+ARTIFACTS = output_root(DATASET) / "artifacts"
+data = load_dataset(dataset=DATASET)
 spec = MODELS["gemma-2-2b"]
 path = ARTIFACTS / spec.name
 

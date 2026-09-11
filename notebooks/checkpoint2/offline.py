@@ -57,7 +57,7 @@ def pa_metrics(ccs, pos, neg, test_idx):
 
 def analyze(path, spec, data, *, threshold=0.5, device='cpu', nepochs=1500,ntries=10,
             seed=0,layers=None,preprocessing='checkpoint1',split=None,
-            lr=0.015,weight_decay=0.01,force_retrain=False):
+            lr=0.015,weight_decay=0.01,force_retrain=False,allow_training=True):
     """No path to model loading. Every call starts from validated raw cache.
 
     seed=0 reproduces the seed set by importing reference ccs.py in Checkpoint 1;
@@ -93,6 +93,8 @@ def analyze(path, spec, data, *, threshold=0.5, device='cpu', nepochs=1500,ntrie
     signature=probe_signature(cache,spec,train,test,config)
     probe_path=Path(path)/'ccs_probes.npz'
     saved=None if force_retrain else load_probes(probe_path,signature)
+    if saved is None and not allow_training:
+        raise ValueError('Compatible saved probes required; CCS training is disabled')
     if saved is not None:
         print('Valid CCS probes: training skipped')
     behavior = behavioral_scores(cache,threshold)

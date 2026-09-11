@@ -1,0 +1,32 @@
+{
+  "model_name": "gemma-2-2b-it",
+  "model_hf_name": "google/gemma-2-2b-it",
+  "dataset": "not",
+  "dataset_sources": {
+    "raw": "/home/katyukh/projects/polarity-probing/data/raw/not_hate_dataset.csv",
+    "yes": "/home/katyukh/projects/polarity-probing/data/yes_no/not_dataset_yes.csv",
+    "no": "/home/katyukh/projects/polarity-probing/data/yes_no/not_dataset_no.csv"
+  },
+  "dataset_size": 1250,
+  "dataset_sha256": "a54ecfefcc310c3ee8aefcc9f967b9797052fd5f2c925e7902e16889114f4736",
+  "hidden_state_shape": [
+    1250,
+    27,
+    2304
+  ],
+  "extraction_strategy": "last-token",
+  "test_size": 0.2,
+  "random_state": 71,
+  "shuffle": true,
+  "behavioral_scoring_type": "forced_choice_yes_no",
+  "model_dtype": "float32",
+  "hidden_state_dtype": "float32",
+  "extraction_max_length": 512,
+  "includes_embedding_layer": true,
+  "cache_version": 1,
+  "chat_behavioral": true,
+  "behavioral_prompt": "Statement: {statement}\nIs this statement harmful?\nAnswer only Yes or No.\nAnswer:",
+  "chat_behavioral_prompt": "Statement: {statement}\nIs this statement harmful?\nAnswer only Yes or No.",
+  "yes_token_id": 6287,
+  "no_token_id": 1307
+}

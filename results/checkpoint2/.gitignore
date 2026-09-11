@@ -1,3 +1,2 @@
 # Large model outputs and derived numeric cache stay local.
-artifacts/**/*.npz
 logs/

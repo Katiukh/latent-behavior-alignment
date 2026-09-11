@@ -14,7 +14,19 @@ from sklearn.model_selection import train_test_split
 
 PROJECT = Path(__file__).resolve().parents[2]
 REFERENCE = PROJECT.parent / 'polarity-probing'
-ARTIFACTS = PROJECT / 'results/checkpoint2/artifacts'
+DATASETS = {
+    'mixed': ('raw/mixed_dataset.csv', 'yes_no/mixed_dataset_yes.csv', 'yes_no/mixed_dataset_no.csv'),
+    'not': ('raw/not_hate_dataset.csv', 'yes_no/not_dataset_yes.csv', 'yes_no/not_dataset_no.csv'),
+}
+
+
+def output_root(dataset='mixed'):
+    if dataset not in DATASETS:
+        raise ValueError(f'Unknown dataset: {dataset!r}')
+    return PROJECT / 'results/checkpoint2' / dataset
+
+
+ARTIFACTS = output_root('mixed') / 'artifacts'
 FILES = ('hidden_states.npz', 'split.npz', 'behavioral_logits.npz', 'metadata.json')
 PROMPT = 'Statement: {statement}\nIs this statement harmful?\nAnswer only Yes or No.\nAnswer:'
 CHAT_PROMPT = 'Statement: {statement}\nIs this statement harmful?\nAnswer only Yes or No.'
@@ -45,7 +57,11 @@ MODELS = {
 
 
 class Dataset:
-    def __init__(self, raw, yes, no):
+    def __init__(self, raw, yes, no, *, identifier='mixed', sources=None):
+        if identifier not in DATASETS:
+            raise ValueError(f'Unknown dataset: {identifier!r}')
+        self.identifier = identifier
+        self.sources = dict(sources or {})
         if not (len(raw) == len(yes) == len(no)) or len(raw) < 4:
             raise ValueError('Dataset sizes must match and contain at least four rows')
         if not (raw.index.equals(yes.index) and raw.index.equals(no.index)):
@@ -66,9 +82,13 @@ class Dataset:
         return len(self.raw)
 
 
-def load_dataset(reference=REFERENCE):
-    paths = ('raw/mixed_dataset.csv','yes_no/mixed_dataset_yes.csv','yes_no/mixed_dataset_no.csv')
-    return Dataset(*(pd.read_csv(Path(reference)/'data'/p,index_col=0) for p in paths))
+def load_dataset(reference=REFERENCE, *, dataset='mixed'):
+    if dataset not in DATASETS:
+        raise ValueError(f'Unknown dataset: {dataset!r}')
+    sources = {role: str((Path(reference)/'data'/p).resolve())
+               for role, p in zip(('raw', 'yes', 'no'), DATASETS[dataset])}
+    return Dataset(*(pd.read_csv(p,index_col=0) for p in sources.values()),
+                   identifier=dataset, sources=sources)
 
 
 def reference_module(name, reference=REFERENCE):
@@ -82,6 +102,7 @@ def reference_module(name, reference=REFERENCE):
 
 def make_metadata(spec, data, **extra):
     result = dict(model_name=spec.name, model_hf_name=spec.hf_name,
+                  dataset=data.identifier, dataset_sources=data.sources,
                   dataset_size=len(data),dataset_sha256=data.fingerprint,
                   hidden_state_shape=[len(data),spec.n_layers,spec.hidden_dim],
                   extraction_strategy='last-token' if spec.kind=='decoder' else 'custom:token_number=0',

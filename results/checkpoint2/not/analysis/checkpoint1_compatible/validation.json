@@ -1,0 +1,72 @@
+{
+  "models": [
+    {
+      "model": "gemma-2-2b",
+      "dataset_size": 1250,
+      "layers": 27,
+      "score_rows": 33750,
+      "test_size": 250,
+      "behavioral_accuracy": 0.512,
+      "latent_accuracy_last_layer": 0.712,
+      "max_cpu_gpu_latent_difference": 4.282791137844022e-07,
+      "probe_reuse_verified": true
+    },
+    {
+      "model": "gemma-2-2b-it",
+      "dataset_size": 1250,
+      "layers": 27,
+      "score_rows": 33750,
+      "test_size": 250,
+      "behavioral_accuracy": 0.516,
+      "latent_accuracy_last_layer": 0.92,
+      "max_cpu_gpu_latent_difference": 2.503204345472021e-07,
+      "probe_reuse_verified": true,
+      "chat_behavioral_accuracy": 0.56
+    },
+    {
+      "model": "gemma-2-9b",
+      "dataset_size": 1250,
+      "layers": 43,
+      "score_rows": 53750,
+      "test_size": 250,
+      "behavioral_accuracy": 0.488,
+      "latent_accuracy_last_layer": 0.752,
+      "max_cpu_gpu_latent_difference": 3.62886047322597e-07,
+      "probe_reuse_verified": true
+    },
+    {
+      "model": "gemma-2-9b-it",
+      "dataset_size": 1250,
+      "layers": 43,
+      "score_rows": 53750,
+      "test_size": 250,
+      "behavioral_accuracy": 0.852,
+      "latent_accuracy_last_layer": 0.928,
+      "max_cpu_gpu_latent_difference": 2.429682922633347e-07,
+      "probe_reuse_verified": true,
+      "chat_behavioral_accuracy": 0.868
+    },
+    {
+      "model": "deberta-hate-tuned",
+      "dataset_size": 1250,
+      "layers": 25,
+      "score_rows": 31250,
+      "test_size": 250,
+      "behavioral_accuracy": 0.62,
+      "latent_accuracy_last_layer": 0.868,
+      "max_cpu_gpu_latent_difference": 6.507112121356684e-07,
+      "probe_reuse_verified": true
+    }
+  ],
+  "protected_files_unchanged": null,
+  "total_score_rows": 206250,
+  "all_layers": 165,
+  "validation": "passed",
+  "protected_tracked_content_unchanged": null,
+  "dataset": "not",
+  "dataset_sources": {
+    "raw": "/home/katyukh/projects/polarity-probing/data/raw/not_hate_dataset.csv",
+    "yes": "/home/katyukh/projects/polarity-probing/data/yes_no/not_dataset_yes.csv",
+    "no": "/home/katyukh/projects/polarity-probing/data/yes_no/not_dataset_no.csv"
+  }
+}

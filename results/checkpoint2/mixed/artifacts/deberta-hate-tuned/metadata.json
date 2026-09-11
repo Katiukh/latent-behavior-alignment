@@ -1,0 +1,32 @@
+{
+  "model_name": "deberta-hate-tuned",
+  "model_hf_name": "Elron/deberta-v3-large-hate",
+  "dataset_size": 1244,
+  "dataset_sha256": "66129cd8aa7dab9b6ead756880330df0a9670bb4590b01a8429c04b9cc0b9702",
+  "hidden_state_shape": [
+    1244,
+    25,
+    1024
+  ],
+  "extraction_strategy": "custom:token_number=0",
+  "test_size": 0.2,
+  "random_state": 71,
+  "shuffle": true,
+  "behavioral_scoring_type": "classifier_softmax",
+  "model_dtype": "float32",
+  "hidden_state_dtype": "float32",
+  "extraction_max_length": 512,
+  "includes_embedding_layer": true,
+  "cache_version": 1,
+  "chat_behavioral": false,
+  "id2label": {
+    "0": "non-hate",
+    "1": "hate"
+  },
+  "dataset": "mixed",
+  "dataset_sources": {
+    "raw": "/home/katyukh/projects/polarity-probing/data/raw/mixed_dataset.csv",
+    "yes": "/home/katyukh/projects/polarity-probing/data/yes_no/mixed_dataset_yes.csv",
+    "no": "/home/katyukh/projects/polarity-probing/data/yes_no/mixed_dataset_no.csv"
+  }
+}

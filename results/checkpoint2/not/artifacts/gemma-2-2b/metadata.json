@@ -1,10 +1,16 @@
 {
   "model_name": "gemma-2-2b",
   "model_hf_name": "google/gemma-2-2b",
-  "dataset_size": 1244,
-  "dataset_sha256": "66129cd8aa7dab9b6ead756880330df0a9670bb4590b01a8429c04b9cc0b9702",
+  "dataset": "not",
+  "dataset_sources": {
+    "raw": "/home/katyukh/projects/polarity-probing/data/raw/not_hate_dataset.csv",
+    "yes": "/home/katyukh/projects/polarity-probing/data/yes_no/not_dataset_yes.csv",
+    "no": "/home/katyukh/projects/polarity-probing/data/yes_no/not_dataset_no.csv"
+  },
+  "dataset_size": 1250,
+  "dataset_sha256": "a54ecfefcc310c3ee8aefcc9f967b9797052fd5f2c925e7902e16889114f4736",
   "hidden_state_shape": [
-    1244,
+    1250,
     27,
     2304
   ],
