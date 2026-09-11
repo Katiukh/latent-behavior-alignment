@@ -1,2 +1,5 @@
-# Large model outputs and derived numeric cache stay local.
-logs/
+# Heavy inference cache
+*/artifacts/*/hidden_states.npz
+
+# Runtime logs
+*/logs/
