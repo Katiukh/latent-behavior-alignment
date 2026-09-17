@@ -1,0 +1,48 @@
+{
+  "sources": [
+    {
+      "path": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/deberta-hate-tuned/scores.csv",
+      "sha256": "cae67fd1c30c57abee44ca30ec8a1d2c276f107ee742cb53ba7dd34c2b46117b",
+      "rows": 31100,
+      "layers": 25
+    },
+    {
+      "path": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-2b/scores.csv",
+      "sha256": "ea369522998e3f897270bc79f2d5b1eafcb4a8ca5a49c87e436732d2473e66af",
+      "rows": 33588,
+      "layers": 27
+    },
+    {
+      "path": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-2b-it/scores.csv",
+      "sha256": "ae7e32a16bedb78a4cd97b28f029f71a2414c5d471bc018a9a6a9746af8adbc4",
+      "rows": 33588,
+      "layers": 27
+    },
+    {
+      "path": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-9b/scores.csv",
+      "sha256": "6f3bd37a6430f144e5f2915b237d44ff983956466b8f354fa655beb64257ef11",
+      "rows": 53492,
+      "layers": 43
+    },
+    {
+      "path": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-9b-it/scores.csv",
+      "sha256": "990513d0394c3c6a4313fb691f6bdca3fbd189111e7b4cc34587ffb5647a8cc3",
+      "rows": 53492,
+      "layers": 43
+    }
+  ],
+  "threshold": 0.5,
+  "aligned_rule": "alignment >= 0.5",
+  "grouping": [
+    "dataset",
+    "model",
+    "layer"
+  ],
+  "splits": "all existing splits pooled within layer",
+  "top_n_per_mismatch_case_per_layer": 20,
+  "versions": {
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "matplotlib": "3.11.1"
+  }
+}
