@@ -217,7 +217,7 @@ def run(root, top_n=20):
                           hashlib.sha256(path.read_bytes()).hexdigest()))
     combined = []
     for dataset in ['not', 'mixed']:
-        output = root / dataset / 'mismatch_analysis'
+        output = root / dataset / 'mismatch_analysis_all_samples_baseline_threshold'
         tables, summaries, sources = [], [], []
         for name, path, objects, summary, digest in plans:
             if name != dataset:
