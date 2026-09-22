@@ -19,7 +19,7 @@
   "random_state": 71,
   "shuffle": true,
   "behavioral_scoring_type": "forced_choice_yes_no",
-  "model_dtype": "bfloat16",
+  "model_dtype": "float16",
   "hidden_state_dtype": "float32",
   "extraction_max_length": 512,
   "includes_embedding_layer": true,

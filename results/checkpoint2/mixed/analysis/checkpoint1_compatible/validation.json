@@ -30,8 +30,8 @@
       "score_rows": 53492,
       "test_size": 249,
       "behavioral_accuracy": 0.46184738955823296,
-      "latent_accuracy_last_layer": 0.8795180722891566,
-      "max_cpu_gpu_latent_difference": 3.1022644042533187e-07,
+      "latent_accuracy_last_layer": 0.8835341365461847,
+      "max_cpu_gpu_latent_difference": 2.6699523925088897e-07,
       "probe_reuse_verified": true
     },
     {

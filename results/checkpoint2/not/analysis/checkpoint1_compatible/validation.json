@@ -29,9 +29,9 @@
       "layers": 43,
       "score_rows": 53750,
       "test_size": 250,
-      "behavioral_accuracy": 0.488,
+      "behavioral_accuracy": 0.5,
       "latent_accuracy_last_layer": 0.752,
-      "max_cpu_gpu_latent_difference": 3.62886047322597e-07,
+      "max_cpu_gpu_latent_difference": 3.550164794918764e-07,
       "probe_reuse_verified": true
     },
     {

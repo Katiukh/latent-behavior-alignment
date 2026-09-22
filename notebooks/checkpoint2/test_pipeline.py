@@ -19,6 +19,10 @@ import artifacts as a
 
 
 class CacheTests(unittest.TestCase):
+    def test_gemma_2_9b_uses_float16_without_changing_instruct_variant(self):
+        self.assertEqual(a.MODELS['gemma-2-9b'].dtype, 'float16')
+        self.assertEqual(a.MODELS['gemma-2-9b-it'].dtype, 'float16')
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)

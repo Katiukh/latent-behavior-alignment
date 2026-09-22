@@ -50,7 +50,7 @@ class ModelSpec:
 MODELS = {
     'gemma-2-2b': ModelSpec('gemma-2-2b','google/gemma-2-2b',27,2304,'float32','decoder'),
     'gemma-2-2b-it': ModelSpec('gemma-2-2b-it','google/gemma-2-2b-it',27,2304,'float32','decoder',True),
-    'gemma-2-9b': ModelSpec('gemma-2-9b','google/gemma-2-9b',43,3584,'bfloat16','decoder'),
+    'gemma-2-9b': ModelSpec('gemma-2-9b','google/gemma-2-9b',43,3584,'float16','decoder'),
     'gemma-2-9b-it': ModelSpec('gemma-2-9b-it','google/gemma-2-9b-it',43,3584,'float16','decoder',True),
     'deberta-hate-tuned': ModelSpec('deberta-hate-tuned','Elron/deberta-v3-large-hate',25,1024,'float32','encoder'),
 }

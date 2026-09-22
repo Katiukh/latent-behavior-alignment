@@ -19,8 +19,8 @@
       "layers": 27
     },
     {
-      "path": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-9b/scores.csv",
-      "sha256": "6f3bd37a6430f144e5f2915b237d44ff983956466b8f354fa655beb64257ef11",
+      "path": "results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-9b/scores.csv",
+      "sha256": "096389b0b332c521294c57bf7f1118d08e9c50816f70025a81d3ec378aecb202",
       "rows": 53492,
       "layers": 43
     },
