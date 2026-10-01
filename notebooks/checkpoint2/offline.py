@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
 
+from pa_ccs_reference import pa_metrics, pa_probabilities
 from artifacts import load_cache, reference_module
 from probes import (probe_signature, prepare_layer, offsets, load_probes,
                     save_probes, restore_probe)
@@ -31,28 +32,6 @@ def behavioral_scores(payload, threshold=0.5):
         df[f'{prefix}behavioral_response'] = np.where(score, 'hate' if classifier else 'Yes', 'non-hate' if classifier else 'No')
     return df
 
-
-def pa_metrics(ccs, pos, neg, test_idx):
-    """Original train_ccs_on_hidden_states pair selection and method calls.
-
-    pos/neg are per-vector L2 normalized, BEFORE train-median subtraction.
-    Reference get_contrastive_probas separately mean-centers each subset.
-    Counterparts may belong to train; this intentionally preserves the source.
-    """
-    n = len(pos)
-    if n % 2:
-        raise ValueError('Original PA-CCS needs two equal dataset halves')
-    A = test_idx[test_idx >= n/2]
-    notA = (A-n/2).astype(int)
-    if not len(A):
-        raise ValueError('No second-half test rows for original PA-CCS')
-    args = (neg[A],pos[A],neg[notA],pos[notA])
-    agreement = ccs.get_agreement(*args)
-    contradiction = ccs.get_contradiction_idx(*args)
-    return {'polar_consistency_↓':float(np.mean(agreement)),
-            'abs_agreement_score':float(np.median(np.abs(agreement))),
-            'contradiction_idx_↓':float(np.mean(contradiction)),
-            'pa_pair_count':len(A)}
 
 
 def analyze(path, spec, data, *, threshold=0.5, device='cpu', nepochs=1500,ntries=10,
@@ -159,34 +138,3 @@ def analyze(path, spec, data, *, threshold=0.5, device='cpu', nepochs=1500,ntrie
         save_probes(probe_path,probe_rows,signature)
     scores = pd.concat(frames,ignore_index=True).merge(behavior,on='sample_idx',how='left',validate='many_to_one')
     return scores,pd.DataFrame(metrics)
-
-
-def pa_probabilities(path, spec, data, layer, device='cpu'):
-    """Return transient original PA-CCS probabilities using an existing probe.
-
-    Uses the split and preprocessing stored with the probe. Never trains.
-    """
-    import json
-    from artifacts import CacheError
-    cache=load_cache(path,spec,data)
-    probe_path=Path(path)/'ccs_probes.npz'
-    try:
-        with np.load(probe_path,allow_pickle=False) as f:
-            stored=json.loads(str(f['metadata_json'].item()))
-        config=stored['config']
-        train,test=np.asarray(stored['train_idx']),np.asarray(stored['test_idx'])
-        signature=probe_signature(cache,spec,train,test,config)
-        saved=load_probes(probe_path,signature)
-        if saved is None:
-            raise CacheError('Probe no longer matches hidden states/reference; run analyze first')
-        index=config['layers'].index(layer)
-    except (OSError,ValueError,KeyError) as e:
-        raise CacheError(f'Cannot restore PA-CCS probe: {e}') from e
-    pos,neg=prepare_layer(cache,layer,config['preprocessing'])
-    ccs=restore_probe(reference_module('ccs').CCS,saved,index,device)
-    A=test[test>=len(data)/2]
-    notA=(A-len(data)/2).astype(int)
-    values=ccs.get_contrastive_probas(neg[A],pos[A],neg[notA],pos[notA])
-    return pd.DataFrame(dict(sample_idx=A,opposition_sample_idx=notA,
-        pA0=values[0].ravel(),pA1=values[1].ravel(),
-        p_notA0=values[2].ravel(),p_notA1=values[3].ravel()))

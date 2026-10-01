@@ -1,0 +1,118 @@
+{
+  "preserved_original_result_and_checkpoint1_files": 528,
+  "preserved_original_files_sha256": "51b04177572137a873332822fc273f720a6ec13152d2b97f778e4af96ad4acfb",
+  "reference_artifact_sha256": {
+    "results/checkpoint2/pa_ccs_analysis_reference/pa_ccs_model_means.csv": "b0858f59dce8d33fc6a34b62ad9af9e0995438858748043b468e85a022e33974",
+    "results/checkpoint2/pa_ccs_analysis_reference/pa_ccs_dataset_means.csv": "da2956e18cefc0bdcde7e48efbfc34f50504beff3e15eec5836b31f64130010e",
+    "results/checkpoint2/pa_ccs_analysis_reference/summary/not_mean_metrics.png": "aa91a29c0225b51b3808b30bd1b72a54e5c3c412482a25a28b513da6784d0f5d",
+    "results/checkpoint2/pa_ccs_analysis_reference/summary/mixed_mean_metrics.png": "be781868e8d35d0679ea9e1af51e5d38a49b4a3cfc6ded8d18cb91e831dda4ce",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/not/gemma-2-9b-it.png": "d5545d57838791c83ab751000357abce2ea71d2edb8df933513a36d11a69a293",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/not/gemma-2-2b-it.png": "d7a523faf6a8150ccea1a3560eee7913c26a3b2f71a15166f7a8bcf650a10578",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/not/deberta-hate-tuned.png": "18cb88922c0b64258410372a0f5a5a7de278324063657afbed5daf87dac26a9f",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/not/gemma-2-2b.png": "f3230ce3aced69d10f9842bae8e9450696a809e48159a204003c57f4c58f57af",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/not/gemma-2-9b.png": "46792b79bda4692e44d137e327a2b30c200d982337184794e7f1a28dabb73123",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/mixed/gemma-2-9b-it.png": "b9e829032c93ecb8dee162b96537285454b651d87623a86d249ff5394ddaf00b",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/mixed/gemma-2-2b-it.png": "fb7fadee3304077bdd2b133a73589ec808b62f3d2abec670db1a51d7daa5923b",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/mixed/deberta-hate-tuned.png": "bce36a2989f3fdda391d5e7f65076df51ee1299fecec7a87238970dd4c19131d",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/mixed/gemma-2-2b.png": "45883116d3ea272bf47ed841b84b96e8221c078b9cc449452dc843dc73349ff7",
+    "results/checkpoint2/pa_ccs_analysis_reference/by_model/mixed/gemma-2-9b.png": "1f42a20992f31a4b33ce12c87df0a25f3544bba0d84c38e2a807ce5555aa1fce"
+  },
+  "historical_pa_functions_source_unchanged": true,
+  "pa_model_layers": 330,
+  "center_audit": {
+    "dataset": "mixed",
+    "model": "gemma-2-2b",
+    "layer": 10,
+    "saved_offsets_equal_train_only_medians": true,
+    "safe_and_harmful_share_answer_offset": true,
+    "max_latent_difference_from_saved_scores": 1.3252334596369764e-07,
+    "reference_pa_metrics_reproduced": true
+  },
+  "calibrated_test_rows": 82335,
+  "calibrated_checks": [
+    {
+      "dataset": "mixed",
+      "model": "deberta-hate-tuned",
+      "n_test": 249,
+      "n_layers": 25,
+      "behavioral_threshold": 0.007111604,
+      "rows": 6225
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-2b",
+      "n_test": 249,
+      "n_layers": 27,
+      "behavioral_threshold": 0.6894572,
+      "rows": 6723
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-2b-it",
+      "n_test": 249,
+      "n_layers": 27,
+      "behavioral_threshold": 0.9992046,
+      "rows": 6723
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-9b-it",
+      "n_test": 249,
+      "n_layers": 43,
+      "behavioral_threshold": 0.9971551,
+      "rows": 10707
+    },
+    {
+      "dataset": "not",
+      "model": "deberta-hate-tuned",
+      "n_test": 250,
+      "n_layers": 25,
+      "behavioral_threshold": 0.0074927662,
+      "rows": 6250
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-2b",
+      "n_test": 250,
+      "n_layers": 27,
+      "behavioral_threshold": 0.69188744,
+      "rows": 6750
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-2b-it",
+      "n_test": 250,
+      "n_layers": 27,
+      "behavioral_threshold": 0.99918157,
+      "rows": 6750
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-9b-it",
+      "n_test": 250,
+      "n_layers": 43,
+      "behavioral_threshold": 0.9971551,
+      "rows": 10750
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-9b",
+      "n_test": 249,
+      "n_layers": 43,
+      "behavioral_threshold": 0.43782347,
+      "rows": 10707
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-9b",
+      "n_test": 250,
+      "n_layers": 43,
+      "behavioral_threshold": 0.43782347,
+      "rows": 10750
+    }
+  ],
+  "source_scores_logits_splits_probes_thresholds_unchanged": true,
+  "readmes": [
+    "README.md"
+  ]
+}

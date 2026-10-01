@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from plot_pa_ccs_metrics import METRIC_COLUMNS, load_layer_metrics, run
+from plot_pa_ccs_metrics_reference import METRIC_COLUMNS, load_layer_metrics, run
 
 
 class PaCcsMetricsTests(unittest.TestCase):
@@ -77,7 +77,7 @@ class PaCcsMetricsTests(unittest.TestCase):
                 summary = run(root, datasets=['mixed', 'not'],
                               models=['shallow', 'deep', 'missing'])
 
-            output = root / 'pa_ccs_analysis'
+            output = root / 'pa_ccs_analysis_reference'
             model_means = pd.read_csv(output / 'pa_ccs_model_means.csv')
             dataset_means = pd.read_csv(output / 'pa_ccs_dataset_means.csv')
             self.assertEqual(model_means.columns.tolist(), [

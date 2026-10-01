@@ -1,0 +1,148 @@
+{
+  "sources": [
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-2b",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/artifacts/gemma-2-2b/ccs_probes.npz",
+      "probe_sha256": "f56786459e1e7eb8ff5f7e7f52316d0521e2cba8c819597f292de37426b18aee",
+      "hidden_sha256": "e14ee1718bf72467befd296f7e522ab9b6b8f9567b53c5edfba9f05561a2c5b2",
+      "source_metrics_sha256": "e5dd3a4b774b0dd997c1479d34ee5ae4d56adb0b3c953e873329562e510232b3",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 995,
+      "n_test": 249
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-2b-it",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/artifacts/gemma-2-2b-it/ccs_probes.npz",
+      "probe_sha256": "ca1e755606820c4c1c5d9ab9d20f04a839920ad18042206207f3654818dd1ee5",
+      "hidden_sha256": "e68134a3fe30ab729f8ed29fc4f8a42ee01dca114c8532b55d8e03f9b6683a33",
+      "source_metrics_sha256": "035a58b66db59000bbc0b12eb578595d16af62c4bfc48c0ba1e20e6c34e6b386",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 995,
+      "n_test": 249
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-9b",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/artifacts/gemma-2-9b/ccs_probes.npz",
+      "probe_sha256": "7da6c7d277539c9a3d6e3a5ba0694b039b201b4c924170008a63d2109385de41",
+      "hidden_sha256": "8e41bc6de4c89efcc6c64bb060597da82690dde613733e1601f061b3f22b73b1",
+      "source_metrics_sha256": "11765a2cbbca7cff1a79395d038a43647c2c3e60ada531d6b6492f084710107c",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 995,
+      "n_test": 249
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-9b-it",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/artifacts/gemma-2-9b-it/ccs_probes.npz",
+      "probe_sha256": "e2aa6a14d29def8ac6a509c608527a9f77b428c6838aca9523781cb1a01fb889",
+      "hidden_sha256": "892a4aef7e747756c9e7e067a8b50748e80eea3bd09ed06dd98e24fc1d32e910",
+      "source_metrics_sha256": "10c96295a270c8794cd98b12d6e809ce816c989131343f0cc55cce94f66011c1",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 995,
+      "n_test": 249
+    },
+    {
+      "dataset": "mixed",
+      "model": "deberta-hate-tuned",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/artifacts/deberta-hate-tuned/ccs_probes.npz",
+      "probe_sha256": "4fcbde062fa79f0cf6ffe76bf2557a48325d84e809e822489241b4deb9763327",
+      "hidden_sha256": "e9d3f3f5bb5e2bcc2f19e4d4f0823cea81bdb8ce2f98629ee8f03b2f1753a8fa",
+      "source_metrics_sha256": "d5e56d010e3c77b1884e8570178ea6b501cb69df63f2a2492e32fc338082d5bf",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 995,
+      "n_test": 249
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-2b",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/artifacts/gemma-2-2b/ccs_probes.npz",
+      "probe_sha256": "f3df1dc771e3e44ab26541c1c91c21b845797796535089aa490cca4a0981ec40",
+      "hidden_sha256": "4d4ffc0a52b69d6e056ab9180983de1d205be4f41102af8d39570055fec6e707",
+      "source_metrics_sha256": "e2141d205f2f1d5ca17ed3e38dd8a1c4db5a7fe4a8719521a7ec917cf223d5ec",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 1000,
+      "n_test": 250
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-2b-it",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/artifacts/gemma-2-2b-it/ccs_probes.npz",
+      "probe_sha256": "1019d7f7a78882eea20daf654be210134756b3a38256d46934b8fd5bca14635e",
+      "hidden_sha256": "4fa036adf2a2260c28f03770714d8b55635e5644b8300de294ebb915c7436bc1",
+      "source_metrics_sha256": "aaf37b5584a59bb337232fba7712682797b348f90164d3be5a212aa4d1680877",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 1000,
+      "n_test": 250
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-9b",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/artifacts/gemma-2-9b/ccs_probes.npz",
+      "probe_sha256": "ecda1ee9784523adc7e9697dba144d9c6a8e94e6698c8484d3db646168a9c01d",
+      "hidden_sha256": "9f02afd987a3bd9480477a0390344c873759ebc32d2e62c6b39127eb71159d90",
+      "source_metrics_sha256": "192c3db26db57842c13aba813691247b657f45abb18c17c55f893bdf21d6980e",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 1000,
+      "n_test": 250
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-9b-it",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/artifacts/gemma-2-9b-it/ccs_probes.npz",
+      "probe_sha256": "f65ae7efa5fd2a2b053e7f9b4b38a18fedb27b63e7076a270a7bc732bf43ec52",
+      "hidden_sha256": "61e2a6c01199c3b59d73a4e7148afa058faec3b7db8a76b42fac2a0bcd267d4b",
+      "source_metrics_sha256": "6145dc74c78b95a710940632bb12edeaf0f313c82fb66c7bc98d66e682d81542",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 1000,
+      "n_test": 250
+    },
+    {
+      "dataset": "not",
+      "model": "deberta-hate-tuned",
+      "probe": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/artifacts/deberta-hate-tuned/ccs_probes.npz",
+      "probe_sha256": "ba93062846a019544961148525988a501433e9c4d4e0dfd762165913d3704127",
+      "hidden_sha256": "0490917f352d000e205ba86124d3ef1f170c80fe734de8ffe4f23d9685d02787",
+      "source_metrics_sha256": "1fd45b1e9521547f0368eb6375d82996c4262335a9c315993a21042cebd2b323",
+      "offsets": [
+        "prediction_offset_pos",
+        "prediction_offset_neg"
+      ],
+      "n_train": 1000,
+      "n_test": 250
+    }
+  ],
+  "esa_regime_source": "https://github.com/SadSabrina/polarity-probing/blob/main/teaser/ccs_teaser.png (panel E)",
+  "metrics": "Unchanged reference ESA, get_agreement and get_contradiction_idx",
+  "pairing": "Safe second-half test rows with first-half counterparts; counterparts may be train",
+  "preprocessing": "prepare_layer checkpoint1, then saved prediction_offset_pos/neg; no group centering"
+}

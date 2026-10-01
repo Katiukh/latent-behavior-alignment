@@ -1,0 +1,81 @@
+{
+  "sources": [
+    {
+      "dataset": "mixed",
+      "model": "deberta-hate-tuned",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/deberta-hate-tuned/scores.csv",
+      "scores_sha256": "cae67fd1c30c57abee44ca30ec8a1d2c276f107ee742cb53ba7dd34c2b46117b",
+      "split_sha256": "71dece2e4385e86b0672022b75cafd54afb68103fb8e36843bf287e1fbd13e2b"
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-2b",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-2b/scores.csv",
+      "scores_sha256": "ea369522998e3f897270bc79f2d5b1eafcb4a8ca5a49c87e436732d2473e66af",
+      "split_sha256": "71dece2e4385e86b0672022b75cafd54afb68103fb8e36843bf287e1fbd13e2b"
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-2b-it",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-2b-it/scores.csv",
+      "scores_sha256": "ae7e32a16bedb78a4cd97b28f029f71a2414c5d471bc018a9a6a9746af8adbc4",
+      "split_sha256": "71dece2e4385e86b0672022b75cafd54afb68103fb8e36843bf287e1fbd13e2b"
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-9b-it",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-9b-it/scores.csv",
+      "scores_sha256": "990513d0394c3c6a4313fb691f6bdca3fbd189111e7b4cc34587ffb5647a8cc3",
+      "split_sha256": "71dece2e4385e86b0672022b75cafd54afb68103fb8e36843bf287e1fbd13e2b"
+    },
+    {
+      "dataset": "not",
+      "model": "deberta-hate-tuned",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/analysis/checkpoint1_compatible/deberta-hate-tuned/scores.csv",
+      "scores_sha256": "4861d19d07ce52548caa0d18dc6fc3eeaf453c305143d1ed8b00d6c6c31c1bd9",
+      "split_sha256": "43178f8020521ba12d8dd4bd1f56fa51275bfc49621f59760fa2e3a0de104fd8"
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-2b",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/analysis/checkpoint1_compatible/gemma-2-2b/scores.csv",
+      "scores_sha256": "6299d4d9509dc73f9fa219407a2925ca4cd439cf54cc89e76e5a63121699c151",
+      "split_sha256": "43178f8020521ba12d8dd4bd1f56fa51275bfc49621f59760fa2e3a0de104fd8"
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-2b-it",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/analysis/checkpoint1_compatible/gemma-2-2b-it/scores.csv",
+      "scores_sha256": "cf0bc4de36cc0cd2acc88eb8a704783ed7f82cb39bc379ce94f09ff877586543",
+      "split_sha256": "43178f8020521ba12d8dd4bd1f56fa51275bfc49621f59760fa2e3a0de104fd8"
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-9b-it",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/analysis/checkpoint1_compatible/gemma-2-9b-it/scores.csv",
+      "scores_sha256": "4ea010d9d683b362099c4ec4a8238f8b57696e76dfbe5454c2ef4d4af6786cbb",
+      "split_sha256": "43178f8020521ba12d8dd4bd1f56fa51275bfc49621f59760fa2e3a0de104fd8"
+    },
+    {
+      "dataset": "mixed",
+      "model": "gemma-2-9b",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/mixed/analysis/checkpoint1_compatible/gemma-2-9b/scores.csv",
+      "scores_sha256": "096389b0b332c521294c57bf7f1118d08e9c50816f70025a81d3ec378aecb202",
+      "split_sha256": "71dece2e4385e86b0672022b75cafd54afb68103fb8e36843bf287e1fbd13e2b"
+    },
+    {
+      "dataset": "not",
+      "model": "gemma-2-9b",
+      "scores": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/not/analysis/checkpoint1_compatible/gemma-2-9b/scores.csv",
+      "scores_sha256": "3d6fae41d3ccc0e006e99c2bdb2363c78dfaa0b036f43d0ca9a69297488b25b0",
+      "split_sha256": "43178f8020521ba12d8dd4bd1f56fa51275bfc49621f59760fa2e3a0de104fd8"
+    }
+  ],
+  "threshold_source": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/behavioral_threshold_analysis/behavioral_thresholds.csv",
+  "threshold_source_sha256": "8151e50dc2b5eb92672ce9c7b45275cb4d6a0e2a6baf9dfdb4823020ad649e8b",
+  "behavioral_rule": "P(harmful) >= saved train threshold",
+  "latent_rule": "saved oriented latent_score > 0.5",
+  "aligned": "predicted class equals true_label",
+  "split": "test only, verified against split.npz for every layer",
+  "model_summary_denominator": "test objects \u00d7 layers; no layer selection"
+}

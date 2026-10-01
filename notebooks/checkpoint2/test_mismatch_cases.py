@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from analyze_mismatch_cases import CASE_TYPES, analyze_scores, summarize, top_cases, wide_summary
+from analyze_mismatch_cases_baseline import CASE_TYPES, analyze_scores, summarize, top_cases, wide_summary
 
 
 class MismatchTests(unittest.TestCase):
