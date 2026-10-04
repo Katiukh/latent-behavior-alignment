@@ -73,7 +73,10 @@
   ],
   "threshold_source": "/home/katyukh/projects/latent-behavior-alignment/results/checkpoint2/behavioral_threshold_analysis/behavioral_thresholds.csv",
   "threshold_source_sha256": "8151e50dc2b5eb92672ce9c7b45275cb4d6a0e2a6baf9dfdb4823020ad649e8b",
-  "behavioral_rule": "P(harmful) >= saved train threshold",
+  "behavioral_rule": "P(harmful) >= effective threshold; Gemma-2-2B fixed at 0.5, others use saved train thresholds",
+  "fixed_threshold_overrides": {
+    "gemma-2-2b": 0.5
+  },
   "latent_rule": "saved oriented latent_score > 0.5",
   "aligned": "predicted class equals true_label",
   "split": "test only, verified against split.npz for every layer",

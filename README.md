@@ -243,7 +243,7 @@ results/
       analysis/checkpoint1_compatible/ Original CCS scores and reference PA metrics
       mismatch_analysis_all_samples_baseline_threshold/
       logs/                            Existing experiment status and logs
-    pa_ccs_analysis_reference/          Preserved historical PA plots/tables
+    pa_ccs_analysis_reference/          Reference PA plots/tables with per-group-centered ESA
     pa_ccs_analysis/                    Main layer metrics and summary plots
     behavioral_threshold_analysis/     Existing fitted thresholds and evaluations
     mismatch_calibrated_test/          Test tables, summaries and plots
@@ -271,3 +271,31 @@ Existing `validation.json` files document CPU restoration of saved probes agains
 the original exports; `migration_mixed.json` records the earlier artifact
 migration. The current cleanup retains historical results and checks saved-center
 preprocessing, reference preservation, threshold reuse and test-only evaluation.
+
+Reference PA-CCS ESA is recomputed by `plot_pa_ccs_metrics_reference.py` from
+saved probes using the same four separately mean-centered groups and A/notA
+pairs as PC/CI. CCS predictions for both halves are scored together with one
+global sign choice; paired counterparts can belong to train, as in reference
+PC/CI. Reference exports replace `accuracy`/ESA and retain the original CCS
+accuracy in `ccs_accuracy`. Source layer tables and the CCS-consistent analysis
+remain unchanged. Running the script also refreshes the depth summary.
+
+Run `python notebooks/checkpoint2/plot_mismatch_category_depth.py` to plot the
+four mismatch-category shares over four relative-depth quarters. Each panel
+compares big/mixed, big/not, small/mixed and small/not. Fractions come from the
+existing calibrated test layer summaries; they are averaged across layers
+within each model and quarter, then across models with equal weight. Categories
+are not recomputed from averaged probabilities. PNG/PDF figures and model/group
+summary CSVs are saved under `mismatch_calibrated_test/summary/`.
+The same script also exports `accuracy_depth_curves.png`/`.pdf` and
+`accuracy_{model,group}_depth_means.csv`. Latent accuracy is the sum of
+both-aligned and behavior-misaligned/latent-aligned shares; calibrated behavioral
+accuracy is both-aligned plus behavior-aligned/latent-misaligned. These use the
+saved train orientation and test labels, with the same equal-model weighting.
+Behavioral predictions are independent of layer, so their curves are flat.
+
+Calibrated mismatch and its accuracy plots keep **Gemma-2-2B (base)** at a
+fixed behavioral threshold of 0.5 on both datasets. Other models use their saved
+train-fitted thresholds. The mismatch threshold table records both effective
+and fitted thresholds; `fitted_train_*` metrics describe the fitting experiment,
+whose original outputs remain unchanged.

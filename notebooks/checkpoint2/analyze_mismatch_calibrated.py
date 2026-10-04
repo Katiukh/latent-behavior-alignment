@@ -17,6 +17,7 @@ def analyze_scores(source, dataset, model, threshold, train_idx, test_idx):
     Calibration uses P(harmful) >= fitted threshold; saved oriented CCS uses
     P(harmful) > 0.5. A safe object's alignment therefore reverses the inequality.
     """
+    threshold = .5 if model == 'gemma-2-2b' else threshold
     frame = source.copy()
     probability = ('behavioral_probability_hate' if 'behavioral_probability_hate' in frame
                    else 'behavioral_probability_yes')
@@ -115,6 +116,11 @@ def run(root):
     expected = {(d, m) for d in DATASETS for m in MODELS}
     if set(zip(thresholds.dataset, thresholds.model)) != expected:
         raise ValueError('Exactly one existing threshold per dataset/model is required')
+    thresholds = thresholds.rename(columns={
+        'train_accuracy': 'fitted_train_accuracy',
+        'train_balanced_accuracy': 'fitted_train_balanced_accuracy'})
+    thresholds['fitted_behavioral_threshold'] = thresholds.behavioral_threshold
+    thresholds.loc[thresholds.model.eq('gemma-2-2b'), 'behavioral_threshold'] = .5
     plans, sources = [], []
     for row in thresholds.itertuples(index=False):
         path = root / row.dataset / 'analysis/checkpoint1_compatible' / row.model / 'scores.csv'
@@ -152,7 +158,8 @@ def run(root):
     (output / 'manifest.json').write_text(json.dumps({
         'sources': sources, 'threshold_source': str(threshold_path),
         'threshold_source_sha256': hashlib.sha256(threshold_path.read_bytes()).hexdigest(),
-        'behavioral_rule': 'P(harmful) >= saved train threshold',
+        'behavioral_rule': 'P(harmful) >= effective threshold; Gemma-2-2B fixed at 0.5, others use saved train thresholds',
+        'fixed_threshold_overrides': {'gemma-2-2b': .5},
         'latent_rule': 'saved oriented latent_score > 0.5',
         'aligned': 'predicted class equals true_label',
         'split': 'test only, verified against split.npz for every layer',

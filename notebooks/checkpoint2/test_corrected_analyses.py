@@ -68,6 +68,16 @@ class CalibratedMismatchTests(unittest.TestCase):
         self.assertTrue(summary.counting_unit.eq('test sample').all())
         self.assertTrue(summary.behavioral_threshold.eq(.8).all())
 
+    def test_gemma_2b_keeps_fixed_threshold_in_both_datasets(self):
+        from analyze_mismatch_calibrated import analyze_scores
+        for dataset in ['mixed', 'not']:
+            result = analyze_scores(self.fixture(), dataset, 'gemma-2-2b', .8,
+                                    np.array([0, 1]), np.array([2, 3, 4, 5]))
+            self.assertTrue(result.behavioral_threshold.eq(.5).all())
+            self.assertEqual(result.behavioral_prediction.tolist(), [1, 1, 1, 1])
+            self.assertEqual(result.behavioral_class.tolist(),
+                             ['aligned', 'aligned', 'misaligned', 'misaligned'])
+
     def test_rejects_split_mismatch_and_missing_test_objects(self):
         from analyze_mismatch_calibrated import analyze_scores
         frame = self.fixture()

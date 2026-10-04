@@ -2,6 +2,7 @@
 import tempfile
 import unittest
 import warnings
+from unittest.mock import patch
 from pathlib import Path
 
 import numpy as np
@@ -74,8 +75,13 @@ class PaCcsMetricsTests(unittest.TestCase):
 
             with warnings.catch_warnings(record=True) as caught:
                 warnings.simplefilter('always')
-                summary = run(root, datasets=['mixed', 'not'],
-                              models=['shallow', 'deep', 'missing'])
+                def fixture_frame(root, dataset, model):
+                    source = root / dataset / 'analysis/checkpoint1_compatible' / model / 'layer_metrics.csv'
+                    return load_layer_metrics(source, dataset, model).assign(dataset=dataset, model=model)
+
+                with patch('plot_pa_ccs_metrics_reference.reference_esa_frame', side_effect=fixture_frame):
+                    summary = run(root, datasets=['mixed', 'not'],
+                                  models=['shallow', 'deep', 'missing'])
 
             output = root / 'pa_ccs_analysis_reference'
             model_means = pd.read_csv(output / 'pa_ccs_model_means.csv')

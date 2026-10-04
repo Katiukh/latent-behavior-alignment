@@ -61,3 +61,58 @@ def pa_probabilities(path, spec, data, layer, device='cpu'):
     return pd.DataFrame(dict(sample_idx=A,opposition_sample_idx=notA,
         pA0=values[0].ravel(),pA1=values[1].ravel(),
         p_notA0=values[2].ravel(),p_notA1=values[3].ravel()))
+
+
+def esa_from_probabilities(probabilities, labels):
+    """CCS accuracy on A and notA together, with one global sign choice."""
+    pA0, pA1, pn0, pn1 = probabilities
+    scores = np.concatenate((.5 * (pA0 + (1 - pA1)),
+                             .5 * (pn0 + (1 - pn1)))).ravel()
+    accuracy = np.mean((scores > .5) == labels)
+    return float(max(accuracy, 1 - accuracy))
+
+
+def reference_esa_frame(root, dataset, model):
+    """Replace exported ESA with accuracy from the reference PA probabilities.
+
+    Uses exactly the PC/CI pairs and per-group means, with saved probes only.
+    Original CCS source tables are never modified.
+    """
+    import json
+    from artifacts import MODELS, load_dataset, CacheError
+    from plot_pa_ccs_metrics_reference import load_layer_metrics
+
+    spec = MODELS[model]
+    data = load_dataset(dataset=dataset)
+    path = Path(root) / dataset / 'artifacts' / model
+    cache = load_cache(path, spec, data)
+    with np.load(path / 'ccs_probes.npz', allow_pickle=False) as f:
+        stored = json.loads(str(f['metadata_json'].item()))
+    config = stored['config']
+    train, test = np.asarray(stored['train_idx']), np.asarray(stored['test_idx'])
+    saved = load_probes(path / 'ccs_probes.npz',
+                        probe_signature(cache, spec, train, test, config))
+    if saved is None:
+        raise CacheError('Compatible saved probes required for reference ESA; no training')
+    source = (Path(root) / dataset / 'analysis/checkpoint1_compatible'
+              / model / 'layer_metrics.csv')
+    frame = load_layer_metrics(source, dataset, model)
+    if frame.layer.tolist() != sorted(saved['layer'].tolist()):
+        raise CacheError('Source metric layers differ from saved probes')
+    A = test[test >= len(data) / 2]
+    notA = (A - len(data) / 2).astype(int)
+    if len(data) % 2 or not len(A):
+        raise CacheError('Reference ESA requires paired dataset halves and second-half test rows')
+    labels = 1 - data.raw.is_harmfull_opposition.to_numpy()
+    pair_labels = np.concatenate((labels[A], labels[notA]))
+    cls = reference_module('ccs').CCS
+    frame['ccs_accuracy'] = frame.accuracy
+    for index, layer in enumerate(saved['layer']):
+        pos, neg = prepare_layer(cache, int(layer), config['preprocessing'])
+        ccs = restore_probe(cls, saved, index, device='cpu')
+        probabilities = ccs.get_contrastive_probas(neg[A], pos[A], neg[notA], pos[notA])
+        frame.loc[frame.layer.eq(layer), 'accuracy'] = esa_from_probabilities(probabilities, pair_labels)
+    return frame.assign(dataset=dataset, model=model, esa=frame.accuracy,
+                        pc=frame['polar_consistency_↓'], ci=frame['contradiction_idx_↓'],
+                        esa_sample_count=2 * len(A),
+                        esa_preprocessing='Reference: L2 + separate mean of each A/notA Yes/No group')

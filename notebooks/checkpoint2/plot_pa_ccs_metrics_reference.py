@@ -1,4 +1,4 @@
-"""Plot and aggregate already-computed PA-CCS layer metrics.
+"""Recompute reference ESA with PC/CI group centering, then plot PA-CCS metrics.
 
 Run: python notebooks/checkpoint2/plot_pa_ccs_metrics_reference.py
 """
@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 
 from artifacts import DATASETS, MODELS, PROJECT
+from pa_ccs_reference import reference_esa_frame
 
 
 METRIC_COLUMNS = {
@@ -126,7 +127,9 @@ def _console_summary(counts, output):
 
 
 def run(results_root, *, datasets=None, models=None):
-    """Generate plots and equal-model-weight summaries from layer CSV files."""
+    """Recompute reference ESA from saved probes and generate all summaries."""
+    import torch
+    torch.set_num_threads(2)
     results_root = Path(results_root)
     datasets = list(DATASETS if datasets is None else datasets)
     models = list(MODELS if models is None else models)
@@ -134,6 +137,7 @@ def run(results_root, *, datasets=None, models=None):
     output.mkdir(parents=True, exist_ok=True)
 
     rows = []
+    frames = []
     counts = {}
     for dataset in datasets:
         counts[dataset] = 0
@@ -145,11 +149,22 @@ def run(results_root, *, datasets=None, models=None):
                     f'{dataset}/{model}: layer_metrics.csv not found; skipping',
                     stacklevel=2)
                 continue
-            frame = load_layer_metrics(source, dataset, model)
+            frame = reference_esa_frame(results_root, dataset, model)
+            frames.append(frame)
+            folder = output / 'by_model' / dataset
+            folder.mkdir(parents=True, exist_ok=True)
+            frame.to_csv(folder / f'{model}.csv', index=False)
             _plot_model(frame, output / 'by_model' / dataset / f'{model}.png',
                         dataset, model)
             rows.append(_model_mean(frame, dataset, model))
             counts[dataset] += 1
+
+    if frames:
+        layers = pd.concat(frames, ignore_index=True)
+        layers.to_csv(output / 'pa_ccs_layer_metrics.csv', index=False)
+        if set(layers.model).issubset(MODELS):
+            from analyze_pa_ccs import plot_group_depth_means
+            plot_group_depth_means(layers, output, title='Reference PA-CCS (per-group mean centering)')
 
     model_means = pd.DataFrame(rows, columns=MODEL_MEAN_COLUMNS)
     model_means.to_csv(output / 'pa_ccs_model_means.csv', index=False)
@@ -164,21 +179,8 @@ def run(results_root, *, datasets=None, models=None):
 
 
 def run_depth_summary(results_root):
-    """Add the six-panel depth summary using historical CSVs without recomputation."""
-    from analyze_pa_ccs import plot_group_depth_means
-    root = Path(results_root)
-    frames = []
-    for dataset in DATASETS:
-        for model in MODELS:
-            source = root / dataset / 'analysis/checkpoint1_compatible' / model / 'layer_metrics.csv'
-            frame = load_layer_metrics(source, dataset, model)
-            frame = frame.assign(dataset=dataset, model=model,
-                                 esa=frame['accuracy'], pc=frame['polar_consistency_↓'],
-                                 ci=frame['contradiction_idx_↓'])
-            frames.append(frame)
-    return plot_group_depth_means(pd.concat(frames, ignore_index=True),
-                                 root / 'pa_ccs_analysis_reference',
-                                 title='Reference PA-CCS (historical preprocessing)')
+    """Regenerate reference outputs, including the depth summary, consistently."""
+    return run(results_root)
 
 
 if __name__ == '__main__':
@@ -186,7 +188,7 @@ if __name__ == '__main__':
     parser.add_argument('--results-root', type=Path,
                         default=PROJECT / 'results/checkpoint2')
     parser.add_argument('--depth-summary-only', action='store_true',
-                        help='Add the six-panel depth summary from historical metrics only')
+                        help='Regenerate reference metrics and the six-panel depth summary')
     args = parser.parse_args()
     if args.depth_summary_only:
         run_depth_summary(args.results_root)
