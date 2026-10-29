@@ -1,1 +1,20 @@
-*.npz
+# Track only the public release; keep research files locally.
+/*
+!/.gitignore
+!/README.md
+!/requirements.txt
+!/notebooks/
+!/modules/
+/notebooks/*
+/modules/*
+!/modules/__init__.py
+!/modules/artifacts.py
+!/modules/ccs.py
+!/modules/experiments.py
+!/modules/plots.py
+!/notebooks/01_gemma_2_2b.ipynb
+!/notebooks/02_gemma_2_2b_it.ipynb
+!/notebooks/03_gemma_2_9b.ipynb
+!/notebooks/04_gemma_2_9b_it.ipynb
+!/notebooks/05_deberta_hate_tuned.ipynb
+!/notebooks/06_aggregation.ipynb
